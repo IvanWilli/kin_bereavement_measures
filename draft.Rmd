@@ -1,0 +1,80 @@
+---
+title: "draft"
+author: "iw"
+date: "`r Sys.Date()`"
+output: 
+  pdf_document: 
+    fig_caption: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+We propose a set of measures to interpret level and timing of bereavement in a kinship network. 
+This indicators reflects the implicit bereavement conditions in a certain population, not implying a specific shock or change.
+
+Each measure is defined for a group or a single each kin type. Heterogeneity can be individual (by chance) or between groups. 
+
+Let's start by creating a kinship network, in this case for Sweden 1950.
+
+```{r cars}
+library(DemoKin)
+px <- swe_px[,"1950"]
+fx <- swe_asfr[,'1950']
+kin_net <- kin(px, fx)
+head(kin_net$kin_full)
+```
+
+Now focus on daughters and mothers, to show what means each measure.
+
+### Expected loss years, non-conditioned to Focal alive.
+
+Prospective, years-kin to share, non-conditioned to Focal alive
+
+$$\sum_{y=x}^{\omega-1}{\sum_{z=0}^{\omega-1}{d_k(y,z)\,e(z)}}$$
+
+### Expected loss years, conditioned to Focal alive.
+
+Prospective, years-kin to share, conditioned to Focal alive
+
+$$\sum_{y=x}^{\omega-1}{\sum_{z=0}^{\omega-1}{d_k(y,z)\,e(y,z)}}$$
+
+### Intensity of bereavement
+
+Retrospective, portion died of accumulated perfect surviving kin, conditioned to Focal alive.
+
+$$D_k(x)/L_k(x)$$
+
+### Loneliness bereavement scale:
+
+#### Age of potential absolute more lost (age with more living kin)
+
+This age can be found in this terms: find the age $x$ where $k(x)$ is maximum. Can be found empirically for each case, but let's take a look to the analytics.
+
+#### Age of potential relative more lost (age with less living kin)
+
+This age can be found in this terms: find the age $x$ where $k(x)$ is minimum.
+
+#### Age of more death experience
+
+This age can be found in this terms: find the age $x$ where $d_k(x)$ is maximum. Is related to [Missov et.al (2015)](https://www.demographic-research.org/volumes/vol32/36/32-36.pdf) but weighted for each subsidy cohort.
+
+### Time since lost
+
+Being $\overline{a}_k(k)$ mean age at lost until age $a$:
+
+$$\sum_{y=0}^{x-1}{\frac{d_k(y)}{D_k(x)}(x-y)}=x-\overline{a}_k(x)$$
+
+### Prevalence of unexpected accumulated dead
+
+What is an unexpected death?
+
+
+
+
+
+```{r}
+ex <- rev(cumsum(px))
+
+```
